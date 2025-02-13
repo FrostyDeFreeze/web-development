@@ -86,4 +86,4 @@ const timeToNewYear = () => {
 	console.info(`До нового года осталось: ${units.d} дней, ${units.h} часов, ${units.m} минут, ${units.s} секунд 🎉`)
 }
 
-getTimeToNewYear()
+timeToNewYear()
