@@ -56,19 +56,23 @@ const humanizer = (input, options = {}) => {
 }
 
 const getTimeToNewYear = () => {
-	const now = Math.floor(Date.now() / 1000)
-	const nextYear = new Date().getFullYear() + 1
-	const newYearTimestamp = new Date(`${nextYear}-01-01T00:00:00Z`).getTime() / 1000
+	const mskDate = new Date().toLocaleString(`en-US`, { timeZone: `Europe/Moscow` })
+	const now = new Date(mskDate).getTime() / 1000
 
-	console.log(`До нового года осталось: ${humanizer(newYearTimestamp - now)} 🎉`)
+	const nextYear = new Date(mskDate).getFullYear() + 1
+	const newYearTimestamp = new Date(`${nextYear}-01-01T00:00:00+03:00`).getTime() / 1000
+
+	console.info(`До нового года осталось: ${humanizer(newYearTimestamp - now)} 🎉`)
 }
 
 getTimeToNewYear()
 
 const timeToNewYear = () => {
-	const now = new Date()
+	const mskDate = new Date().toLocaleString(`en-US`, { timeZone: `Europe/Moscow` })
+	const now = new Date(mskDate)
+
 	const nextYear = now.getFullYear() + 1
-	const newYearDate = new Date(`${nextYear}-01-01T00:00:00Z`)
+	const newYearDate = new Date(`${nextYear}-01-01T00:00:00+03:00`)
 
 	const diff = newYearDate - now
 
@@ -82,4 +86,4 @@ const timeToNewYear = () => {
 	console.info(`До нового года осталось: ${units.d} дней, ${units.h} часов, ${units.m} минут, ${units.s} секунд 🎉`)
 }
 
-timeToNewYear()
+getTimeToNewYear()
