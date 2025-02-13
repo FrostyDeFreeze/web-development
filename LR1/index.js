@@ -62,7 +62,7 @@ const getTimeToNewYear = () => {
 	const nextYear = new Date(mskDate).getFullYear() + 1
 	const newYearTimestamp = new Date(`${nextYear}-01-01T00:00:00+03:00`).getTime() / 1000
 
-	console.info(`До нового года осталось: ${humanizer(newYearTimestamp - now)} 🎉`)
+	console.info(`[1] До нового года осталось: ${humanizer(newYearTimestamp - now)} 🎉`)
 }
 
 getTimeToNewYear()
@@ -83,7 +83,39 @@ const timeToNewYear = () => {
 		s: Math.floor((diff / 1000) % 60)
 	}
 
-	console.info(`До нового года осталось: ${units.d} дней, ${units.h} часов, ${units.m} минут, ${units.s} секунд 🎉`)
+	console.info(`[2] До нового года осталось: ${units.d} дней, ${units.h} часов, ${units.m} минут, ${units.s} секунд 🎉`)
 }
 
 timeToNewYear()
+
+const timeToNewYearIntl = () => {
+	const formatter = new Intl.DateTimeFormat(`en-US`, {
+		timeZone: `Europe/Moscow`,
+		year: `numeric`,
+		month: `2-digit`,
+		day: `2-digit`,
+		hour: `2-digit`,
+		minute: `2-digit`,
+		second: `2-digit`,
+		hour12: false
+	})
+
+	console.debug(formatter.formatToParts(new Date()))
+
+	const [{ value: month }, , { value: day }, , { value: year }, , { value: hour }, , { value: minute }, , { value: second }] =
+		formatter.formatToParts(new Date())
+
+	const now = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}+03:00`)
+	const nextYear = new Date(`${parseInt(year) + 1}-01-01T00:00:00+03:00`)
+
+	const diff = nextYear - now
+
+	const d = Math.floor(diff / (1000 * 60 * 60 * 24))
+	const h = Math.floor((diff / (1000 * 60 * 60)) % 24)
+	const m = Math.floor((diff / (1000 * 60)) % 60)
+	const s = Math.floor((diff / 1000) % 60)
+
+	console.info(`[3] До нового года осталось: ${d} дней, ${h} часов, ${m} минут, ${s} секунд 🎉`)
+}
+
+timeToNewYearIntl()
