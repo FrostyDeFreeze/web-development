@@ -1,0 +1,13 @@
+{
+	"name": "lr2",
+	"author": "FrostyDeFreeze",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"luxon": "^3.5.0"
+	}
+}
