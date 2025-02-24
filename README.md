@@ -2,7 +2,7 @@
 
 ## Установка NodeJS
 
-https://nodejs.org/dist/v23.7.0/node-v23.7.0-x64.msi
+https://nodejs.org/dist/v23.7.0/node-v23.8.0-x64.msi
 
 ## Клонирование репозитория
 
