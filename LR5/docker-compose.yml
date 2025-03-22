@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+    db:
+        command: ['postgres', '-c', 'log_statement=all']
+        container_name: lr5_db
+        environment:
+            - POSTGRES_DB=lr5_db
+            - POSTGRES_USER=cuvi
+            - POSTGRES_PASSWORD=forsen
+            - POSTGRES_HOST_AUTH_METHOD=trust
+        image: postgres:14
+        ports:
+            - '5432:5432'
+        restart: always
+        volumes:
+            - lr5_db_volume:/var/lib/postgresql/data
+
+    pg_admin_lr5:
+        container_name: pg_admin_lr5
+        image: dpage/pgadmin4:8.9
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=cuvi@example.com
+            - PGADMIN_DEFAULT_PASSWORD=poro
+        ports:
+            - '7777:80'
+        volumes:
+            - pgadmin_volume:/var/lib/pgadmin
+        restart: always
+
+volumes:
+    pgadmin_volume:
+    lr5_db_volume:
