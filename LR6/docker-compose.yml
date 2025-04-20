@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+    db:
+        command: ['postgres', '-c', 'log_statement=all']
+        container_name: lr6_db
+        environment:
+            - POSTGRES_DB=lr6_db
+            - POSTGRES_USER=cuvi
+            - POSTGRES_PASSWORD=forsen
+            - POSTGRES_HOST_AUTH_METHOD=trust
+        image: postgres:14
+        ports:
+            - '5432:5432'
+        restart: always
+        volumes:
+            - lr6_db_volume:/var/lib/postgresql/data
+
+    lr6_pg_admin:
+        container_name: lr6_pg_admin
+        image: dpage/pgadmin4:8.9
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=cuvi@example.com
+            - PGADMIN_DEFAULT_PASSWORD=poro
+        ports:
+            - '7777:80'
+        volumes:
+            - lr6_pgadmin_volume:/var/lib/pgadmin
+        restart: always
+
+    lr6_redis:
+        image: redis:latest
+        restart: always
+        container_name: lr6_redis_container
+        command: redis-server --requirepass forsen
+        ports:
+            - '6379:6379'
+        volumes:
+            - lr6_redis_data:/var/lib/redis
+
+volumes:
+    lr6_db_volume:
+    lr6_pgadmin_volume:
+    lr6_redis_data:

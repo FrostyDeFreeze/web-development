@@ -1,0 +1,21 @@
+{
+	"name": "lr6",
+	"author": "FrostyDeFreeze",
+	"version": "1.0.0",
+	"main": "/src/server.js",
+	"type": "module",
+	"scripts": {
+		"start": "node src/server.js",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@fastify/cookie": "^11.0.2",
+		"@fastify/jwt": "^9.1.0",
+		"@fastify/redis": "^7.0.2",
+		"fastify": "^5.2.1",
+		"luxon": "^3.6.0",
+		"pg": "^8.14.0",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.37.6"
+	}
+}
