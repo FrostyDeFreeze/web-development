@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+    db:
+        command: ['postgres', '-c', 'log_statement=all']
+        container_name: lr7_db
+        environment:
+            - POSTGRES_DB=lr7_db
+            - POSTGRES_USER=cuvi
+            - POSTGRES_PASSWORD=forsen
+            - POSTGRES_HOST_AUTH_METHOD=trust
+        image: postgres:14
+        ports:
+            - '5432:5432'
+        restart: always
+        volumes:
+            - lr7_db_volume:/var/lib/postgresql/data
+
+    lr7_pg_admin:
+        container_name: lr7_pg_admin
+        image: dpage/pgadmin4:8.9
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=cuvi@example.com
+            - PGADMIN_DEFAULT_PASSWORD=poro
+        ports:
+            - '7777:80'
+        restart: always
+        volumes:
+            - lr7_pgadmin_volume:/var/lib/pgadmin
+
+    lr7_redis:
+        image: redis:latest
+        container_name: lr7_redis_container
+        command: redis-server --requirepass forsen
+        ports:
+            - '6379:6379'
+        restart: always
+        volumes:
+            - lr7_redis_data:/var/lib/redis
+
+    lr7_minio:
+        image: minio/minio
+        container_name: lr7_minio
+        ports:
+            - '9000:9000'
+            - '9001:9001'
+        environment:
+            MINIO_ROOT_USER: cuvi
+            MINIO_ROOT_PASSWORD: forsen123
+        command: server /data --address ":9000" --console-address ":9001"
+        restart: always
+        volumes:
+            - lr7_minio_volume:/data
+
+volumes:
+    lr7_db_volume:
+    lr7_pgadmin_volume:
+    lr7_redis_data:
+    lr7_minio_volume:
+
+networks:
+    minio_network:
+        driver: bridge
