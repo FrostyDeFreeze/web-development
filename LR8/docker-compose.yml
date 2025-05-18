@@ -1,0 +1,16 @@
+services:
+    rabbitmq:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        environment:
+            - RABBITMQ_DEFAULT_USER=cuvi
+            - RABBITMQ_DEFAULT_PASS=forsen123
+        ports:
+            - '5672:5672'
+            - '8080:15672'
+        volumes:
+            - rabbitmq-data:/var/lib/rabbitmq
+        restart: always
+
+volumes:
+    rabbitmq-data:
